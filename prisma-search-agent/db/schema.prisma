@@ -1,0 +1,22 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define your database connection
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Define your agent model
+model Agent {
+  id        Int      @id @default(autoincrement())
+  email     String
+  phone     String
+  name      String
+  filter    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
