@@ -57,7 +57,7 @@ const memberIsInList = async (email) => {
   }
 };
 
-const getTemplate = async () => {
+/*const getTemplate = async () => {
   try {
     const url = 'https://a.klaviyo.com/api/templates/SSKSj4';
     const options = {
@@ -100,10 +100,10 @@ const cloneTemplate = async () => {
   } catch (error) {
     console.error(error);
   }
-}
+}*/
 
 export default {
   addUserToList,
-  getTemplate,
-  cloneTemplate
+  // getTemplate,
+  // cloneTemplate
 };
