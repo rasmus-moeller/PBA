@@ -45,23 +45,42 @@ async function matchSearchAgent(req, res){
     const { products} = req.body;
 
     const agentsWithAMatch = searchAgentService.filterProductsForSearchAgents(searchAgentsWithParsedFilter, products)
-
-    res.json(agentsWithAMatch);
+    if (agentsWithAMatch.length) {
+      await sendGridService.sendMail(agentsWithAMatch)
+      res.status(200).json('Mails sent');
+    }
+    res.status(200).json('No matching search agents');
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
-async function sendEmail(req, res){
-    const mail = await sendGridService.sendMail('rasm937k@gmail.com')
+async function findSearchAgents(req, res) {
+  const searchAgents = await searchAgentService.getSearchAgentsByMail(req.query.email)
 
-    return res.json(mail)
+  return res.json(searchAgents)
+}
+
+async function deleteSearchAgent(req, res){
+  const { id } = req.params
+  const searchAgent = await searchAgentService.deleteSearchAgent(Number(id))
+
+  return res.status(200).json(searchAgent)
+}
+
+async function updateSearchAgent(req, res){
+  const { id } = req.params
+  const searchAgent = await searchAgentService.updateSearchAgent(Number(id), req.body.filter)
+
+  return res.status(200).json(searchAgent)
 }
 
 export default{
   createSearchAgent,
   getAllSearchAgents,
   matchSearchAgent,
-  sendEmail
+  findSearchAgents,
+  deleteSearchAgent,
+  updateSearchAgent
 };

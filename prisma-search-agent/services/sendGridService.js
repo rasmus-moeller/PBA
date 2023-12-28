@@ -6,6 +6,8 @@ import emailTemplate from '../template/template1.js'
 
 const sendMail = async (receiver) => {
 
+    console.log(JSON.stringify(receiver));
+
     let test = emailTemplate(receiver)
 
     const msg = {
@@ -20,7 +22,6 @@ const sendMail = async (receiver) => {
     } catch (error) {
         console.error(error)
     }
-
 }
 
 export default{

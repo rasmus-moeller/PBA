@@ -18,6 +18,16 @@ async function getAllSearchAgents() {
   return searchAgents;
 }
 
+async function getSearchAgentsByMail(email){
+  const searchAgents = await prisma.Agent.findMany({
+    where: {
+      email: email,
+    },
+  });
+
+  return searchAgents
+}
+
 function cleanFilter(filter) {
   return Object.keys(filter).reduce((cleanedFilter, key) => {
     const value = filter[key];
@@ -57,13 +67,46 @@ function filterProductsForSearchAgents(searchAgents, products) {
       filteredProductsBySearchAgent.push({ searchAgent, filteredProducts });
     }
   }
-
   return filteredProductsBySearchAgent;
 }
+
+async function deleteSearchAgent(id) {
+  try {
+    const deletedSearchAgent = await prisma.Agent.delete({
+      where: {
+        id: id,
+      },
+    });
+    return deletedSearchAgent;
+  } catch (error) {
+    // Handle errors if any
+    console.error('Error deleting search agent:', error);
+    throw error;
+  }
+}
+
+async function updateSearchAgent(id, filter){
+
+  const updatedAgent = await prisma.Agent.update({
+    where: {
+      id: id,
+    },
+    data: {
+      filter: filter,
+    },
+  });
+
+  return updatedAgent
+}
+
+
 
 export default {
   createSearchAgent,
   getAllSearchAgents,
   cleanFilter,
-  filterProductsForSearchAgents
+  filterProductsForSearchAgents,
+  getSearchAgentsByMail,
+  deleteSearchAgent,
+  updateSearchAgent
 };
