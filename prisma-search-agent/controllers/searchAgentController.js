@@ -35,6 +35,28 @@ async function getAllSearchAgents(req, res) {
   }
 }
 
+const consolidateProductMatches = (data) => {
+  let emailToMatches = {};
+
+  data.forEach(item => {
+      const userEmail = item.searchAgent.email;
+      const userProducts = item.filteredProducts;
+
+      if (!emailToMatches[userEmail]) {
+          emailToMatches[userEmail] = {
+              email: userEmail,
+              matchedProducts: []
+          };
+      }
+
+      emailToMatches[userEmail].matchedProducts = emailToMatches[userEmail].matchedProducts.concat(userProducts);
+  });
+
+  return Object.values(emailToMatches);
+}
+
+
+
 async function matchSearchAgent(req, res){
     try {
     const searchAgents = await searchAgentService.getAllSearchAgents();
@@ -45,9 +67,11 @@ async function matchSearchAgent(req, res){
     const { products} = req.body;
 
     const agentsWithAMatch = searchAgentService.filterProductsForSearchAgents(searchAgentsWithParsedFilter, products)
+
+    const filteredAgentMatches = consolidateProductMatches(agentsWithAMatch)
     if (agentsWithAMatch.length) {
-      // await sendGridService.sendMail(agentsWithAMatch)
-      res.status(200).json('Mails sent');
+      await sendGridService.sendMail(filteredAgentMatches)
+      res.status(200).json(agentsWithAMatch);
     }else{
       res.status(200).json('No matching search agents');
     }
