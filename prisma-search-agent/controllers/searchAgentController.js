@@ -46,10 +46,11 @@ async function matchSearchAgent(req, res){
 
     const agentsWithAMatch = searchAgentService.filterProductsForSearchAgents(searchAgentsWithParsedFilter, products)
     if (agentsWithAMatch.length) {
-      await sendGridService.sendMail(agentsWithAMatch)
+      // await sendGridService.sendMail(agentsWithAMatch)
       res.status(200).json('Mails sent');
+    }else{
+      res.status(200).json('No matching search agents');
     }
-    res.status(200).json('No matching search agents');
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
