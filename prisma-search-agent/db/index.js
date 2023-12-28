@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const dbConfig = {
-  host: 'localhost', 
-  user: 'user',
-  password: 'password',
-  database: 'searchagent',
+  host: "localhost",
+  user: "user",
+  password: "password",
+  database: "searchagent",
 };
 
 const prisma = new PrismaClient({
@@ -15,4 +15,4 @@ const prisma = new PrismaClient({
   },
 });
 
-export default prisma
+export default prisma;
