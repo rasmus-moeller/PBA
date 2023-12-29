@@ -56,7 +56,7 @@ function filterProductsForSearchAgents(searchAgents, products) {
             if(value.from > product[key] && value.to < product[key]){
                 return false;
             }
-        }else if (product[key] !== value) {
+        }else if (product[key] !== value.toLowerCase()) {
           return false;
         }
       }
