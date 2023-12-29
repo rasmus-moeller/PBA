@@ -20,8 +20,6 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *         description: Search agent object
  *         in: body
  *         required: true
- *         schema:
- *           $ref: '#/definitions/SearchAgent'
  *     responses:
  *       200:
  *         description: Search agent created successfully
@@ -43,8 +41,6 @@ router.post('/', (req, res) => {
  *         description: Search agent object
  *         in: body
  *         required: true
- *         schema:
- *           $ref: '#/definitions/SearchAgent'
  *     responses:
  *       200:
  *         description: Search agent matched successfully
@@ -128,8 +124,6 @@ router.delete('/delete/:id', verifyToken, (req, res) => {
    *         description: Search agent object
    *         in: body
    *         required: true
-   *         schema:
-   *           $ref: '#/definitions/SearchAgent'
    *     responses:
    *       200:
    *         description: Search agent updated successfully
