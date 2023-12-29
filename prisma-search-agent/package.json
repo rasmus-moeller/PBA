@@ -23,6 +23,8 @@
     "node-fetch-commonjs": "^3.3.2",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
-    "prisma": "^5.3.1"
+    "prisma": "^5.3.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }
