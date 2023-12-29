@@ -10,7 +10,7 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /**
  * @swagger
- * /search-agent:
+ * /:
  *   post:
  *     description: Create a search agent
  *     produces:
@@ -25,13 +25,14 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *         description: Search agent created successfully
  */
 router.post('/', (req, res) => {
-    return searchAgentController.createSearchAgent(req, res);
-  });
+  return searchAgentController.createSearchAgent(req, res);
+});
+
   
 
 /**
  * @swagger
- * /search-agent/match:
+ * /match:
  *   post:
  *     description: Match search agent
  *     produces:
@@ -52,7 +53,7 @@ router.post('/match', (req, res) => {
 
 /**
  * @swagger
- * /search-agent:
+ * /:
  *   get:
  *     description: Get all search agents
  *     produces:
@@ -67,7 +68,7 @@ router.get('/', (req, res) => {
 
 /**
  * @swagger
- * /search-agent/find:
+ * /find:
  *   get:
  *     description: Find search agents (requires token)
  *     security:
@@ -84,7 +85,7 @@ router.get('/find', verifyToken, (req, res) => {
 
 /**
  * @swagger
- * /search-agent/delete/{id}:
+ * /delete/{id}:
  *   delete:
  *     description: Delete a search agent by ID (requires token)
  *     security:
@@ -107,7 +108,7 @@ router.delete('/delete/:id', verifyToken, (req, res) => {
   
   /**
    * @swagger
-   * /search-agent/update/{id}:
+   * /update/{id}:
    *   put:
    *     description: Update a search agent by ID (requires token)
    *     security:
