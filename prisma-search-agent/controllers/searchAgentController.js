@@ -1,6 +1,7 @@
 import searchAgentService from'../services/searchAgentService.js';
 import  klaviyoService from '../services/klaviyoService.js'
 import sendGridService from '../services/sendGridService.js'
+import fetch from 'node-fetch';
 
 async function createSearchAgent(req, res) {
   try {
@@ -8,14 +9,33 @@ async function createSearchAgent(req, res) {
     const cleanedFilter = searchAgentService.cleanFilter(filter);
     const createdSearchAgent = await searchAgentService.createSearchAgent(phone, email, name, cleanedFilter);
     let searchAgentCreated = false;
-    let userAddedToKlaviyo = false
+    let userAddedToKlaviyo = false;
     if (createdSearchAgent.id) {
         searchAgentCreated = true;
         const addUserToKlaviyoList = await klaviyoService.addUserToList(email, name)
         if (addUserToKlaviyoList !== 'Member already in list') {
             userAddedToKlaviyo = true
         }
-    }
+        const password = Math.random().toString(36).slice(-12);
+        fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({email, password}),
+      })
+        .then(response => {
+          if (response.ok) {
+            sendGridService.sendCreationMail(email, password)
+          } else if(response.status === 400){
+            console.log("user already exists");
+          }else{
+            console.error('Registration failed. Status:', response.status);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+              
+          }
     const response = {isSearchAgentCreated: searchAgentCreated, isUserAddedToKlaviyo: userAddedToKlaviyo}
     res.json(response);
   } catch (error) {

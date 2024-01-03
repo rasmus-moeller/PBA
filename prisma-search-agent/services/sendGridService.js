@@ -3,6 +3,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 import dotenv from 'dotenv';
 dotenv.config();
 import emailTemplate from '../template/template1.js'
+import creationTemplate from '../template/creation.js'
 
 const sendMail = async (receivers, handle, image, batchSize = 50) => {
     const batches = [];
@@ -36,6 +37,25 @@ const sendMail = async (receivers, handle, image, batchSize = 50) => {
     }
 };
 
+const sendCreationMail = async (email, password) => {
+
+    const emailContent = creationTemplate(email, password);
+    const msg = {
+        to: email,
+        from: { name: 'Anothers Legacy', email: 'rm@nofipa.dk' },
+        subject: 'Søgeagent oprettet - her er dit login',
+        html: emailContent,
+    };
+
+    try {
+        await sgMail.send(msg);
+        console.log(`Email sent to ${email}`);
+    } catch (error) {
+        console.error(`Error sending email to ${email}:`, error);
+    }
+}
+
 export default {
     sendMail,
+    sendCreationMail
 };
