@@ -31,6 +31,7 @@ const sendMail = async (receivers, batchSize = 50) => {
             }
         });
 
+        // Wait for the batch to complete before moving to the next one
         await Promise.all(promises);
     }
 };

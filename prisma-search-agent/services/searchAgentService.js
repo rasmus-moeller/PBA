@@ -53,7 +53,7 @@ function filterProductsForSearchAgents(searchAgents, products) {
             return false;
           }
         } else if(value?.from && value?.to){
-            if(value.from > product[key] && value.to < product[key]){
+            if(value.from > product[key] && value.to < product[key] || value.from === value.to && product[key] !== value.from){
                 return false;
             }
         }else if (product[key] !== value.toLowerCase()) {
