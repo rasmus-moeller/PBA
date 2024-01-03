@@ -70,7 +70,7 @@ async function matchSearchAgent(req, res){
 
     const filteredAgentMatches = consolidateProductMatches(agentsWithAMatch)
     if (agentsWithAMatch.length) {
-      await sendGridService.sendMail(filteredAgentMatches)
+      await sendGridService.sendMail(filteredAgentMatches, req.body.handle, req.body.image.src)
       res.status(200).json(agentsWithAMatch);
     }else{
       res.status(200).json('No matching search agents');

@@ -1,4 +1,4 @@
-export default (context) => {
+export default (context, handle, image) => {
     return `<!DOCTYPE html>
 <html lang="en">
 
@@ -31,24 +31,9 @@ export default (context) => {
         <main class="mt-8">
             <div class="container mx-auto mt-8 mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <a href="https://example.com/redirect1" target="_blank">
-                        <img src="https://cdn.shopify.com/s/files/1/0627/5927/2676/products/IMG_0076-2_9af9af25-e90a-48e2-9321-d8f77ce39ec3.jpg?v=1691836181"
+                    <a href="https://718a5d-3.myshopify.com/products/${handle}" target="_blank">
+                        <img src="${image}"
                             alt="Image 1" class="max-w-xs mx-auto" style="max-width: 125px; max-height: 125px;">
-                    </a>
-
-                    <a href="https://example.com/redirect2" target="_blank">
-                        <img src="https://cdn.shopify.com/s/files/1/0627/5927/2676/products/1._IMG_0274-2.jpg?v=1691566573"
-                            alt="Image 2" class="max-w-xs mx-auto" style="max-width: 125px; max-height: 125px;">
-                    </a>
-
-                    <a href="https://example.com/redirect3" target="_blank">
-                        <img src="https://cdn.shopify.com/s/files/1/0627/5927/2676/products/1._IMG_0062-2.jpg?v=1691836170"
-                            alt="Image 3" class="max-w-xs mx-auto" style="max-width: 125px; max-height: 125px;">
-                    </a>
-
-                    <a href="https://example.com/redirect3" target="_blank">
-                        <img src="https://cdn.shopify.com/s/files/1/0627/5927/2676/products/1._IMG_0062-2.jpg?v=1691836170"
-                            alt="Image 3" class="max-w-xs mx-auto" style="max-width: 125px; max-height: 125px;">
                     </a>
                 </div>
             </div>

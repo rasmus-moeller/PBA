@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import emailTemplate from '../template/template1.js'
 
-const sendMail = async (receivers, batchSize = 50) => {
+const sendMail = async (receivers, handle, image, batchSize = 50) => {
     const batches = [];
     while (receivers.length > 0) {
         batches.push(receivers.splice(0, batchSize));
@@ -14,7 +14,7 @@ const sendMail = async (receivers, batchSize = 50) => {
         const promises = batch.map(async (receiver) => {
             console.log(JSON.stringify(receiver));
 
-            const emailContent = emailTemplate(receiver);
+            const emailContent = emailTemplate(receiver, handle, image);
 
             const msg = {
                 to: receiver.email,
