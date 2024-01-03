@@ -60,7 +60,7 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *               type: string
  *               description: Additional information about the operation.
  */
-router.post('/search-agent', (req, res) => {
+router.post('/', (req, res) => {
   return searchAgentController.createSearchAgent(req, res);
 });
 
