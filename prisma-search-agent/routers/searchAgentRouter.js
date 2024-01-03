@@ -10,23 +10,60 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /**
  * @swagger
- * /:
+ * /search-agent:
  *   post:
- *     description: Create a search agent
+ *     summary: Create a search agent to discover products based on data analysis.
+ *     description: >
+ *       This endpoint empowers the creation of a search agent, a sophisticated data-driven entity
+ *       designed to explore and uncover products within the vast realm of available data.
  *     produces:
  *       - application/json
  *     parameters:
  *       - name: body
- *         description: Search agent object
  *         in: body
+ *         description: Search agent configuration for product discovery.
  *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             agentName:
+ *               type: string
+ *               description: Name of the search agent.
+ *             filters:
+ *               type: object
+ *               description: Criteria for product filtering.
+ *               properties:
+ *                 category:
+ *                   type: string
+ *                   description: Desired product category.
+ *                 priceRange:
+ *                   type: object
+ *                   description: Range of acceptable product prices.
+ *                   properties:
+ *                     min:
+ *                       type: number
+ *                       description: Minimum price.
+ *                     max:
+ *                       type: number
+ *                       description: Maximum price.
+ *             # Add more properties as needed
  *     responses:
  *       200:
- *         description: Search agent created successfully
+ *         description: Search agent successfully created for product discovery.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             status:
+ *               type: string
+ *               description: Status of the operation.
+ *             message:
+ *               type: string
+ *               description: Additional information about the operation.
  */
-router.post('/', (req, res) => {
+router.post('/search-agent', (req, res) => {
   return searchAgentController.createSearchAgent(req, res);
 });
+
 
   
 
