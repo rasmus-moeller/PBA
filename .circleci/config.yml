@@ -14,7 +14,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-51-85-49.eu-north-1.compute.amazonaws.com bash -c "'
             cd /home/ubuntu/PBA/prisma-search-agent;
             git pull origin main;
-            pm2 restart all;
+            /home/ubuntu/.nvm/versions/node/v16.13.2/bin/pm2 restart all;
             '"
 
 workflows:
