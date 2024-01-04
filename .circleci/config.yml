@@ -11,11 +11,11 @@ jobs:
       - run:
           name: Deploy to EC2
           command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-51-85-49.eu-north-1.compute.amazonaws.com << 'ENDSSH'
-            cd /home/ubuntu/PBA/prisma-search-agent
-            git pull origin main  # Pulling from the main branch
-            pm2 restart all
-            ENDSSH
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-51-85-49.eu-north-1.compute.amazonaws.com bash -c "'
+            cd /home/ubuntu/PBA/prisma-search-agent;
+            git pull origin main;
+            pm2 restart all;
+            '"
 
 workflows:
   version: 2
