@@ -7,7 +7,7 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'API for prisagent',
   },
-  host: 'localhost:3002',
+  host: '16.171.39.224:3000',
   basePath: '/',
 };
 

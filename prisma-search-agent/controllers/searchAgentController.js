@@ -17,7 +17,7 @@ async function createSearchAgent(req, res) {
             userAddedToKlaviyo = true
         }
         const password = Math.random().toString(36).slice(-12);
-        fetch('http://localhost:3000/register', {
+        fetch('http://16.171.39.224:3000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
