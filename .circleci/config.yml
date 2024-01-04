@@ -1,0 +1,28 @@
+version: 2.1
+jobs:
+  deploy:
+    docker:
+      - image: cimg/node:16.13.2 # Using Node.js version 16.13.2
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "38:f4:c1:9a:85:7c:df:97:6f:ed:5c:81:8c:b7:a4:84"
+      - run:
+          name: Deploy to EC2
+          command: |
+            ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-51-85-49.eu-north-1.compute.amazonaws.com << 'ENDSSH'
+            cd /home/ubuntu/PBA/prisma-search-agent
+            git pull origin main  # Pulling from the main branch
+            pm2 restart all
+            ENDSSH
+
+workflows:
+  version: 2
+  deploy_workflow:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - main # Set to trigger on pushes to the main branch
