@@ -45,19 +45,32 @@ function filterProductsForSearchAgents(searchAgents, products) {
   for (const searchAgent of searchAgents) {
     const filteredProducts = products.filter((product) => {
       for (const [key, value] of Object.entries(searchAgent.filter)) {
-        if(!product[key]){
-            return false;
+        if (!product[key]) {
+          return false;
+        }
+
+        let productValue = product[key];
+        let searchValue = value;
+
+        // Check if the value is a string and convert both to lowercase
+        if (typeof productValue === 'string' && typeof searchValue === 'string') {
+          productValue = productValue.toLowerCase();
+          searchValue = searchValue.toLowerCase();
         }
 
         if (Array.isArray(value)) {
-            if (!value.includes(product[key])) {
+          if (!value.includes(productValue)) {
             return false;
           }
-        } else if(value?.from && value?.to){
-            if(value.from > product[key] && value.to < product[key] || value.from === value.to && product[key] !== value.from){
-                return false;
-            }
-        }else if (product[key].toLowerCase() !== value.toLowerCase()) {
+        } else if (searchValue?.from && searchValue?.to) {
+          if (
+            searchValue.from > productValue &&
+            searchValue.to < productValue ||
+            searchValue.from === searchValue.to && productValue !== searchValue.from
+          ) {
+            return false;
+          }
+        } else if (productValue !== searchValue) {
           return false;
         }
       }
@@ -70,6 +83,7 @@ function filterProductsForSearchAgents(searchAgents, products) {
   }
   return filteredProductsBySearchAgent;
 }
+
 
 async function deleteSearchAgent(id) {
   try {
