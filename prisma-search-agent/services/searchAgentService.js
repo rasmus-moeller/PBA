@@ -19,6 +19,7 @@ async function getAllSearchAgents() {
 }
 
 async function getSearchAgentsByMail(email){
+  console.log(email);
   const searchAgents = await prisma.Agent.findMany({
     where: {
       email: email,
