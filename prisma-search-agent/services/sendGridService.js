@@ -1,9 +1,10 @@
 import sgMail from '@sendgrid/mail';
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 import dotenv from 'dotenv';
 dotenv.config();
 import emailTemplate from '../template/template1.js'
 import creationTemplate from '../template/creation.js'
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendMail = async (receivers, handle, image, batchSize = 50) => {
     const batches = [];
@@ -13,9 +14,8 @@ const sendMail = async (receivers, handle, image, batchSize = 50) => {
 
     for (const batch of batches) {
         const promises = batch.map(async (receiver) => {
-            console.log(JSON.stringify(receiver));
 
-            const emailContent = emailTemplate(receiver, handle, image);
+            const emailContent = emailTemplate(receiver);
 
             const msg = {
                 to: receiver.email,

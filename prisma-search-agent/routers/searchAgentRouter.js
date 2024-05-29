@@ -64,12 +64,6 @@ router.post('/', (req, res) => {
   return searchAgentController.createSearchAgent(req, res);
 });
 
-router.get('/hello', (req, res) => {
-  return res.json("hi")
-})
-
-  
-
 /**
  * @swagger
  * search-agent/match:

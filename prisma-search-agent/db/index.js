@@ -1,9 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+
 const dbConfig = {
-  host: "16.171.149.63",
-  user: "user",
-  password: "password",
+  host: "searchagent.cxei2towh3wo.eu-central-1.rds.amazonaws.com",
+  user: "admin",
+  password: process.env.PROD_DB_PW,
   database: "searchagent",
 };
 

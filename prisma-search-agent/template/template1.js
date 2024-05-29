@@ -1,4 +1,4 @@
-export default (context, handle, image) => {
+export default (context) => {
     return `<!DOCTYPE html>
 <html lang="en">
 
@@ -29,14 +29,17 @@ export default (context, handle, image) => {
         </p>
 
         <main class="mt-8">
-            <div class="container mx-auto mt-8 mb-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <a href="https://718a5d-3.myshopify.com/products/${handle}" target="_blank">
-                        <img src="${image}"
-                            alt="Image 1" class="max-w-xs mx-auto" style="max-width: 125px; max-height: 125px;">
-                    </a>
-                </div>
+        <div class="container mx-auto mt-8 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        ${context.matchedProducts.map((product) => {
+            return `
+                <a href="https://anotherslegacy.dk/products/${product.handle}">
+                    <img src="${product.images[0].src}" alt="${product.handle}" class="max-w-xs mx-auto" style="max-width: 125px; max-height: 125px;">
+                </a>
+            `;
+        }).join('')}
             </div>
+         </div>
 
             <hr>
 

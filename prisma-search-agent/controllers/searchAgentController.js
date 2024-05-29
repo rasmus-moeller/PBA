@@ -12,12 +12,12 @@ async function createSearchAgent(req, res) {
     let userAddedToKlaviyo = false;
     if (createdSearchAgent.id) {
         searchAgentCreated = true;
-        const addUserToKlaviyoList = await klaviyoService.addUserToList(email, name)
-        if (addUserToKlaviyoList !== 'Member already in list') {
-            userAddedToKlaviyo = true
-        }
+        //const addUserToKlaviyoList = await klaviyoService.addUserToList(email, name)
+        //if (addUserToKlaviyoList !== 'Member already in list') {
+        //    userAddedToKlaviyo = true
+        //}
         const password = Math.random().toString(36).slice(-12);
-        fetch('http://16.171.39.224:3000/register', {
+        fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,12 +85,14 @@ async function matchSearchAgent(req, res){
       filter: searchAgent.filter,
     }));
     const { products} = req.body;
+    const cleanedProducts = searchAgentService.cleanProducts(products);
+    
 
-    const agentsWithAMatch = searchAgentService.filterProductsForSearchAgents(searchAgentsWithParsedFilter, products)
+    const agentsWithAMatch = searchAgentService.filterProductsForSearchAgents(searchAgentsWithParsedFilter, cleanedProducts)
 
     const filteredAgentMatches = consolidateProductMatches(agentsWithAMatch)
     if (agentsWithAMatch.length) {
-      await sendGridService.sendMail(filteredAgentMatches, req.body.handle, req.body.image.src)
+      await sendGridService.sendMail(filteredAgentMatches)
       res.status(200).json(agentsWithAMatch);
     }else{
       res.status(200).json('No matching search agents');

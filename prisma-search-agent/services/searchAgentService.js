@@ -39,17 +39,35 @@ function cleanFilter(filter) {
   }, {});
 }
 
+function cleanProducts(products) {
+    return products.map(obj => {
+        // Initialize an empty object for metafieldsRefactored
+        const metafieldsRefactored = {};
+        
+        // Populate metafieldsRefactored with key-value pairs from metafields array
+        obj.metafields.forEach(metafield => {
+            metafieldsRefactored[metafield.key] = metafield.value;
+        });
+        
+        // Add metafieldsRefactored to the original object
+        return {
+            ...obj,
+            metafieldsRefactored
+        };
+    });
+}
+
 function filterProductsForSearchAgents(searchAgents, products) {
   const filteredProductsBySearchAgent = [];
 
   for (const searchAgent of searchAgents) {
     const filteredProducts = products.filter((product) => {
       for (const [key, value] of Object.entries(searchAgent.filter)) {
-        if (!product[key]) {
+        if (!product.metafieldsRefactored[key]) {
           return false;
         }
 
-        let productValue = product[key];
+        let productValue = product.metafieldsRefactored[key];
         let searchValue = value;
 
         // Check if the value is a string and convert both to lowercase
@@ -123,5 +141,6 @@ export default {
   filterProductsForSearchAgents,
   getSearchAgentsByMail,
   deleteSearchAgent,
-  updateSearchAgent
+  updateSearchAgent,
+  cleanProducts
 };
